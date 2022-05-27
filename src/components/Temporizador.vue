@@ -1,0 +1,43 @@
+<template>
+    <div class="is-flex is-align-items-center is-justify-content-space-between">
+        <Cronometro :tempoEmSegundos="tempoEmSegundos" />
+        <TemporizadorBotao icone="fa-play" :cronometroRodando="cronometroRodando" textoBotao="play" @aoClicar="iniciar" />
+        <TemporizadorBotao icone="fa-stop" :cronometroRodando="!cronometroRodando" textoBotao="parar" @aoClicar="finalizar" />
+    </div>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue'
+import Cronometro from './Cronometro.vue';
+import TemporizadorBotao from './TemporizadorBotao.vue';
+
+export default defineComponent({
+    name: 'Temporizador',
+    emits: ['aoTemporizadorFinalizado'],
+    data() {
+        return {
+            tempoEmSegundos: 0,
+            cronometro: 0,
+            cronometroRodando: false
+        }
+    },
+    components: {
+    Cronometro,
+    TemporizadorBotao
+},
+    methods: {
+        iniciar(): void {
+            this.cronometroRodando = true,
+            this.cronometro = setInterval(() => {
+                this.tempoEmSegundos++
+            }, 1000);
+        },
+        finalizar(): void {
+            this.cronometroRodando = false;
+            clearInterval(this.cronometro);
+            this.$emit('aoTemporizadorFinalizado', this.tempoEmSegundos);
+            this.tempoEmSegundos = 0;
+        }
+    }
+})
+</script>
