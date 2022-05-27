@@ -15,21 +15,20 @@ export default defineComponent({
     props: {
         textoBotao: {
             type: String,
-            default: ''
+            required: true
         },
         icone: {
             type: String,
-            default: ''
+            required: true
         },
         cronometroRodando: {
-            type: Boolean,
-            default: false
+            type: Boolean
         }
     },
     emits: ['aoClicar'],
     methods: {
         aoClicar(): void {
-            this.$emit('aoClicar', null);
+            this.$emit('aoClicar');
         }
     }
 })
