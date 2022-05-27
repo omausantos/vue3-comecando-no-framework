@@ -7,6 +7,9 @@
       <FormularioTarefa @aoSalvarTarefa="salvarTarefa" />
       <div class="lista">
         <Tarefa v-for="(tarefa, index) in tarefas" :key="index" :tarefa="tarefa" />
+        <Box v-if="listaVazia">
+          Nenhuma atividade cadastrada :(
+        </Box>
       </div>
     </div>
   </main>
@@ -18,6 +21,7 @@ import BarraLateral from './components/BarraLateral.vue';
 import FormularioTarefa from './components/FormularioTarefa.vue';
 import Tarefa from './components/Tarefa.vue';
 import ITarefa from './Interfaces/ITarefa';
+import Box from './components/Box.vue';
 
 export default defineComponent({
   name: 'App',
@@ -29,12 +33,18 @@ export default defineComponent({
   components: {
     BarraLateral,
     FormularioTarefa,
-    Tarefa
+    Tarefa,
+    Box
   },
   methods: {
     salvarTarefa(tarefa: ITarefa): void {
       this.tarefas.push(tarefa);
       console.log(this.tarefas);
+    }
+  },
+  computed: {
+    listaVazia(): boolean {
+      return this.tarefas.length === 0;
     }
   }
 });
@@ -42,7 +52,7 @@ export default defineComponent({
 
 
 <style>
-  .lista {
-    padding: 1.25rem;
-  }
+.lista {
+  padding: 1.25rem;
+}
 </style>
